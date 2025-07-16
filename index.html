@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafathar Code - Toko Produk Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: 30px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .search-box button:hover {
+            background: var(--secondary);
+        }
+
+        /* Categories */
+        .categories {
+            margin: 25px 0;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .categories-container {
+            display: flex;
+            gap: 15px;
+            padding: 5px 0;
+        }
+
+        .category {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            white-space: nowrap;
+        }
+
+        .category:hover, .category.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Products Section */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 180px;
+            background: linear-gradient(45deg, #f0f4f8, #e2e8f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .save-image {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .save-image:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-buy:hover {
+            background: var(--secondary);
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .payment-method h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .payment-method i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .payment-details {
+            background: var(--light-gray);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .payment-method.selected .payment-details {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 22px;
+            }
+            
+            .product-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+ <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-laptop-code"></i>
+                    <h1>Rafathar Code</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="active">Beranda</a>
+                    <a href="#">Produk</a>
+                    <a href="#">Cara Order</a>
+                    <a href="#">Testimoni</a>
+                    <a href="#">Kontak</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Cari produk...">
+                <button id="search-button"><i class="fas fa-search"></i> Cari</button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <div class="categories-container">
+                <div class="category active">Semua Produk</div>
+                <div class="category">VPS</div>
+                <div class="category">Panel</div>
+                <div class="category">Reseller</div>
+                <div class="category">Script</div>
+                <div class="category">Admin</div>
+                <div class="category">Owner</div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <h2 class="section-title">Produk Unggulan</h2>
+        <div class="products-grid">
+            <!-- VPS Products -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2906/2906274.png" alt="VPS 1GB">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">VPS</div>
+                    <h3 class="product-title">VPS 1GB</h3>
+                    <p class="product-description">Virtual Private Server dengan RAM 1GB</p>
+                    <div class="product-price">Rp 20.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2906/2906274.png" alt="VPS 2GB Core 1">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">VPS</div>
+                    <h3 class="product-title">VPS 2GB Core 1</h3>
+                    <p class="product-description">VPS dengan RAM 2GB dan 1 Core</p>
+                    <div class="product-price">Rp 25.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Panel Products -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2452/2452567.png" alt="Admin Panel Basic">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Panel</div>
+                    <h3 class="product-title">Admin Panel Basic</h3>
+                    <p class="product-description">Admin Panel Basic dengan RAM 16GB</p>
+                    <div class="product-price">Rp 15.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2452/2452567.png" alt="Admin Panel Premium">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Panel</div>
+                    <h3 class="product-title">Admin Panel Premium</h3>
+                    <p class="product-description">Admin Panel Premium dengan RAM 32GB</p>
+                    <div class="product-price">Rp 20.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Script Products -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6213/6213731.png" alt="RafatharCode V9">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Script</div>
+                    <h3 class="product-title">RafatharCode V9</h3>
+                    <p class="product-description">Script RafatharCode versi 9</p>
+                    <div class="product-price">Rp 25.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6213/6213731.png" alt="RafatharCode V11">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Script</div>
+                    <h3 class="product-title">RafatharCode V11</h3>
+                    <p class="product-description">Script RafatharCode versi 11</p>
+                    <div class="product-price">Rp 40.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <!-- Reseller Products -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1074/1074138.png" alt="Reseller Script Premium">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Reseller</div>
+                    <h3 class="product-title">Reseller Script Premium</h3>
+                    <p class="product-description">Reseller script permanen dengan berbagai keuntungan</p>
+                    <div class="product-price">Rp 45.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1074/1074138.png" alt="Owner Panel Premium">
+                    <div class="save-image">
+                        <i class="fas fa-download"></i>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Owner</div>
+                    <h3 class="product-title">Owner Panel Premium</h3>
+                    <p class="product-description">Owner panel permanen dengan berbagai keuntungan</p>
+                    <div class="product-price">Rp 35.000</div>
+                    <button class="btn-buy">Beli Sekarang</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <h2 class="section-title">Metode Pembayaran</h2>
+            <p>Pilih metode pembayaran yang Anda inginkan:</p>
+            
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <h3><i class="fab fa-dyalog"></i> DANA</h3>
+                    <p>Transfer ke nomor DANA berikut:</p>
+                    <div class="payment-details">
+                        <p><strong>Nomor:</strong> 08388329551</p>
+                        <p>Setelah transfer, kirim bukti ke WhatsApp Developer</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-mobile-alt"></i> OVO</h3>
+                    <p>Transfer ke nomor OVO berikut:</p>
+                    <div class="payment-details">
+                        <p><strong>Nomor:</strong> 083835382136</p>
+                        <p>Setelah transfer, kirim bukti ke WhatsApp Developer</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fab fa-google"></i> GOPAY</h3>
+                    <p>Transfer ke nomor GOPAY berikut:</p>
+                    <div class="payment-details">
+                        <p><strong>Nomor:</strong> 083183432282</p>
+                        <p>Setelah transfer, kirim bukti ke WhatsApp Developer</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-qrcode"></i> QRIS</h3>
+                    <p>Scan QR Code berikut:</p>
+                    <div class="payment-details">
+                        <img src="https://files.catbox.moe/yheioz.jpg" alt="QRIS Payment" style="width:100%; border-radius:8px; margin-top:10px;">
+                        <p style="margin-top:10px;">Setelah transfer, kirim bukti ke WhatsApp Developer</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-university"></i> Transfer Bank</h3>
+                    <p>Transfer ke rekening BNI:</p>
+                    <div class="payment-details">
+                        <p><strong>Bank:</strong> BNI</p>
+                        <p><strong>Nomor Rekening:</strong> 1815068659</p>
+                        <p>Setelah transfer, kirim bukti ke WhatsApp Developer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; background: #e3f2fd; padding: 20px; border-radius: var(--border-radius);">
+                <h3><i class="fas fa-info-circle"></i> Instruksi Pembayaran</h3>
+                <p>Setelah melakukan pembayaran, silahkan kirim bukti transfer ke nomor WhatsApp Developer:</p>
+                <p style="margin: 10px 0; font-weight: 500;">
+                    <i class="fab fa-whatsapp"></i> <a href="https://wa.me/6285864743922" style="color: var(--primary); text-decoration: none;">+62 858-6474-3922</a>
+                </p>
+                <p>Produk akan dikirimkan setelah pembayaran dikonfirmasi.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Rafathar Code</h3>
+                    <p>Menyediakan berbagai produk digital berkualitas dengan harga terjangkau. VPS, Panel, Script, dan layanan lainnya.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kontak Developer</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://wa.me/6285864743922">
+                                <i class="fab fa-whatsapp"></i> +62 858-6474-3922
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://chat.whatsapp.com/IbLbagzflGJB5VihxpC9z0">
+                                <i class="fas fa-users"></i> Group Developer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://whatsapp.com/channel/0029Vajny6c4tRs0qnwveJ0s">
+                                <i class="fab fa-whatsapp"></i> Channel Developer
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Produk Populer</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-server"></i> VPS</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                        <li><a href="#"><i class="fas fa-code"></i> Script Rafathar</a></li>
+                        <li><a href="#"><i class="fas fa-user-tie"></i> Reseller</a></li>
+                    </ul>
+                </div>
+            </div>
+              <div class="footer-bottom">
+                <p>&copy; 2023 Rafathar Code. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', () => {
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                method.classList.add('selected');
+            });
+        });
+
+        // Product image save functionality
+        const saveButtons = document.querySelectorAll('.save-image');
+        saveButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('.product-title').textContent;
+                
+                // Change icon to indicate saved
+                const icon = this.querySelector('i');
+                icon.className = 'fas fa-check';
+                
+                // Revert after 1.5 seconds
+                setTimeout(() => {
+                    icon.className = 'fas fa-download';
+                }, 1500);
+                
+                // In a real app, this would trigger a download
+                alert(`Gambar untuk produk "${productName}" berhasil disimpan!`);
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') performSearch();
+        });
+        
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm === '') return;
+            
+            alert(`Pencarian untuk: ${searchTerm}\n\nFitur pencarian akan menampilkan produk yang sesuai dengan kata kunci.`);
+            // In a real application, this would filter the products
+        }
+
+        // Category filtering
+        const categories = document.querySelectorAll('.category');
+        categories.forEach(category => {
+            category.addEventListener('click', function() {
+                categories.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                
+                const categoryName = this.textContent;
+                if (categoryName === 'Semua Produk') return;
+                
+                alert(`Menampilkan produk dalam kategori: ${categoryName}`);
+                // In a real application, this would filter the products
+            });
+        });
+
+        // Buy button functionality
+        const buyButtons = document.querySelectorAll('.btn-buy');
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productName = productCard.querySelector('.product-title').textContent;
+                const productPrice = productCard.querySelector('.product-price').textContent;
+                
+                alert(`Anda akan membeli:\n\n${productName}\n${productPrice}\n\nSilakan pilih metode pembayaran di bawah.`);
+                
+                // Scroll to payment section
+                document.querySelector('.payment-section').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
